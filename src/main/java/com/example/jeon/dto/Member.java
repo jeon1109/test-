@@ -40,10 +40,14 @@ public class Member implements Persistable<String> {
     private String addressDetail;
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "member_roles",
+            joinColumns = @JoinColumn(name = "member_user_id")  // ← 여기가 핵심!
+    )
     @Enumerated(EnumType.STRING)
     private List<Role> roles;
-    @OneToOne(fetch = FetchType.LAZY)
-    private MemberImage memberImage;    //프로필 사진
+    //@OneToOne(fetch = FetchType.LAZY)
+   // private MemberImage memberImage;    //프로필 사진
 
     @CreatedDate
     @Column(updatable = false)
@@ -72,9 +76,9 @@ public class Member implements Persistable<String> {
         this.createdDate = createdDate;
     }
 
-    public void updateMemberImage(MemberImage memberImage) {
+    /*public void updateMemberImage(MemberImage memberImage) {
         this.memberImage = memberImage;
-    }
+    }*/
 
     public void updateRole(Role role) {
         if(this.roles == null) {

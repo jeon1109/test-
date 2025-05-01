@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TokenResponseDTO {
-
     private String accessToken;
     private boolean isNewMember;
 

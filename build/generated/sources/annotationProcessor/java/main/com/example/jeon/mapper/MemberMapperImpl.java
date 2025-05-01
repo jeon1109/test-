@@ -2,18 +2,16 @@ package com.example.jeon.mapper;
 
 import com.example.jeon.dto.Member;
 import com.example.jeon.dto.MemberDTO;
-import com.example.jeon.dto.MemberImage;
 import com.example.jeon.dto.MemberRequestDTO;
 import com.example.jeon.dto.Role;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-04-20T02:43:47+0900",
+    date = "2025-05-02T01:45:08+0900",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.0.jar, environment: Java 17.0.12 (Oracle Corporation)"
 )
 @Component
@@ -39,7 +37,6 @@ public class MemberMapperImpl implements MemberMapper {
         memberDTO.provider( member.getProvider() );
         memberDTO.street( member.getStreet() );
         memberDTO.addressDetail( member.getAddressDetail() );
-        memberDTO.memberImage( member.getMemberImage() );
         List<Role> list = member.getRoles();
         if ( list != null ) {
             memberDTO.roles( new ArrayList<Role>( list ) );
@@ -97,6 +94,11 @@ public class MemberMapperImpl implements MemberMapper {
         member.zipcode( String.valueOf( memberRequestDTO.getZipcode() ) );
         member.street( memberRequestDTO.getStreet() );
         member.addressDetail( memberRequestDTO.getAddressDetail() );
+        List<Role> list = memberRequestDTO.getRoles();
+        if ( list != null ) {
+            member.roles( new ArrayList<Role>( list ) );
+        }
+        member.createdDate( memberRequestDTO.getCreatedDate() );
 
         return member.build();
     }
@@ -119,18 +121,11 @@ public class MemberMapperImpl implements MemberMapper {
         memberDTO.zipcode( String.valueOf( memberRequestDTO.getZipcode() ) );
         memberDTO.street( memberRequestDTO.getStreet() );
         memberDTO.addressDetail( memberRequestDTO.getAddressDetail() );
-        memberDTO.memberImage( multipartFileToMemberImage( memberRequestDTO.getMemberImage() ) );
-
-        return memberDTO.build();
-    }
-
-    protected MemberImage multipartFileToMemberImage(MultipartFile multipartFile) {
-        if ( multipartFile == null ) {
-            return null;
+        List<Role> list = memberRequestDTO.getRoles();
+        if ( list != null ) {
+            memberDTO.roles( new ArrayList<Role>( list ) );
         }
 
-        MemberImage.MemberImageBuilder<?, ?> memberImage = MemberImage.builder();
-
-        return memberImage.build();
+        return memberDTO.build();
     }
 }

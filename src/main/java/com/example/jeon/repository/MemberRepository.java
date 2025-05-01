@@ -12,7 +12,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Optional<Member> findByUserId(String userId);
 
-    @Query("select m from Member m left join fetch m.memberImage where m.userId = :userId")
+    @Query("select m from Member m where m.userId = :userId")
     Optional<Member> findByUserIdEagerLoadImage(String userId);
 
     Optional<Member> findByEmail(String email);

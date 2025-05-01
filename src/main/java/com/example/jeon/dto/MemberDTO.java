@@ -24,14 +24,14 @@ public class MemberDTO {
     private Provider provider;
     private String street;
     private String addressDetail;
-    private MemberImage memberImage;
+    //private MemberImage memberImage;
     private List<Role> roles;
     private LocalDateTime createdDate;
-
+    // MemberImage memberImage
     @Builder
     public MemberDTO(String userId, String username, String nickname, int gender
             , LocalDate birth, String email, String phoneNo, String zipcode, boolean social
-            , Provider provider, String street, String addressDetail, MemberImage memberImage
+            , Provider provider, String street, String addressDetail
             , List<Role> roles, LocalDateTime createdDate) {
         this.userId = userId;
         this.username = username;
@@ -45,7 +45,7 @@ public class MemberDTO {
         this.provider = provider;
         this.street = street;
         this.addressDetail = addressDetail;
-        this.memberImage = memberImage;
+        //this.memberImage = memberImage;
         this.roles = roles;
         this.createdDate = createdDate;
     }
