@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class ApiController {
 
     private final TokenService tokenService;
-
     @Operation(summary = "토큰 갱신")
     @PostMapping("/refreshToken")
     public ResponseEntity<TokenDTO> refreshToken(@RequestBody TokenDTO tokenDTO) {

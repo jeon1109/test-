@@ -20,7 +20,7 @@ import java.util.List;
 public class Member implements Persistable<String> {
     @Id
     @NonNull
-    @Column(updatable = false, unique = true)
+    @Column(updatable = false, unique = true, name = "userId")
     private String userId;     //사용자 ID값
     private String password;
     private String username;
@@ -30,6 +30,7 @@ public class Member implements Persistable<String> {
     @NonNull
     @Column(unique = true)
     private String email;
+    @Column(name = "phoneNo")
     private String phoneNo;
     private boolean social;
 
@@ -37,6 +38,7 @@ public class Member implements Persistable<String> {
     private Provider provider;
     private String zipcode;
     private String street;
+    @Column(name = "addressDetail")
     private String addressDetail;
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -50,7 +52,7 @@ public class Member implements Persistable<String> {
    // private MemberImage memberImage;    //프로필 사진
 
     @CreatedDate
-    @Column(updatable = false)
+    @Column(updatable = false, name = "createdDate")
     @NonNull
     private LocalDateTime createdDate;
 

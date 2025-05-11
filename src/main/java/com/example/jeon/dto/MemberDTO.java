@@ -1,5 +1,6 @@
 package com.example.jeon.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,20 +13,24 @@ import java.util.List;
 @NoArgsConstructor
 public class MemberDTO {
 
+    @JsonProperty("userId")
     private String userId;
     private String username;
     private String nickname;
     private int gender;
     private LocalDate birth;
     private String email;
+    @JsonProperty("phoneNo")
     private String phoneNo;
     private String zipcode;
     private boolean social;
     private Provider provider;
     private String street;
+    @JsonProperty("addressDetail")
     private String addressDetail;
     //private MemberImage memberImage;
     private List<Role> roles;
+    @JsonProperty("createdDate")
     private LocalDateTime createdDate;
     // MemberImage memberImage
     @Builder
