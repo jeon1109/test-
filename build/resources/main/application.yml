@@ -13,6 +13,8 @@ spring:
     show-sql: true
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
+      ddl-auto: update
+    properties:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
   jackson:

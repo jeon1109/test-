@@ -12,9 +12,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginRequestDTO {
-    @Column(name = "userId")
+
     private String userId;
-    @Column(name = "password")
     private String password;
 
     public UsernamePasswordAuthenticationToken toAuthentication() {

@@ -21,14 +21,9 @@ public class MemberController {
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
 
-    @GetMapping("/")
-    public String home() {
-        return "Welcome!";
-    }
-
     @PostMapping("/signup")
     public ResponseEntity<String> memberSignup(@RequestBody MemberRequestDTO memberRequestDTO) {
-       // log.info(memberRequestDTO);
+        log.info(memberRequestDTO);
         log.info("비밀번호 확인: {}", memberRequestDTO.getPassword());
         memberRequestDTO.setPassword(passwordEncoder.encode(memberRequestDTO.getPassword()));
         memberService.signup(memberRequestDTO);
@@ -36,7 +31,7 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<TokenResponseDTO> memberLogin(@ModelAttribute LoginRequestDTO loginRequestDTO) {
+    public ResponseEntity<TokenResponseDTO> memberLogin(@RequestBody LoginRequestDTO loginRequestDTO) {
         log.info(loginRequestDTO);
         TokenDTO tokenDTO = memberService.login(loginRequestDTO);
         ResponseCookie responseCookie = ResponseCookie

@@ -17,6 +17,7 @@ public class IpAccessInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception {
+
         String clientIp = Utils.getClientIP(request);
         if (clientIp.equals("127.0.0.1")) {
             // 로컬 접속이면 당연히 true

@@ -9,8 +9,9 @@
 <body>
 <div class="container mt-5" style="max-width: 400px;">
   <h2 class="text-center mb-4">로그인</h2>
-  <p th:text="'안녕하세요' + ${data}"></p>
-  <form th:action="@{/login}" method="post">
+  <div id="message" class="text-danger mb-3 text-center"></div>
+
+  <form id="loginForm" method="post">
     <div class="mb-3">
       <label for="username" class="form-label">아이디</label>
       <input type="text" class="form-control" id="username" name="username" required>
@@ -21,9 +22,38 @@
     </div>
     <button type="submit" class="btn btn-primary w-100">로그인</button>
   </form>
-  <div th:if="${param.error}" class="alert alert-danger mt-3" role="alert">
-    아이디 또는 비밀번호가 잘못되었습니다.
-  </div>
 </div>
+<script>
+  const form = document.getElementById('loginForm');
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    try {
+      const response = await fetch('/member/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: username, password: password })
+      });
+      console.log("response");
+      console.log(response);
+      if (response.ok) {
+        const data = await response.json();
+        console.log("data ==");
+        console.log(data);
+        localStorage.setItem('token', data.accessToken);  // JWT 저장
+        window.location.href = '/hello.html';  // 성공 시 이동
+      } else {
+        document.getElementById('message').innerText = '아이디 또는 비밀번호가 틀렸습니다.';
+      }
+    } catch (err) {
+      console.error('로그인 요청 중 에러 발생:', err);
+      document.getElementById('message').innerText = '요청 처리 중 문제가 발생했어요.';
+    }
+  });
+</script>
 </body>
 </html>

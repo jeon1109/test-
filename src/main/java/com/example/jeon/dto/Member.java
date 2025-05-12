@@ -19,18 +19,14 @@ import java.util.List;
 @DynamicUpdate
 public class Member implements Persistable<String> {
     @Id
-    @NonNull
-    @Column(updatable = false, unique = true, name = "userId")
     private String userId;     //사용자 ID값
     private String password;
     private String username;
     private String nickname;
     private int gender;   //0기타 1남성 2여성
     private LocalDate birth;
-    @NonNull
     @Column(unique = true)
     private String email;
-    @Column(name = "phoneNo")
     private String phoneNo;
     private boolean social;
 
@@ -38,13 +34,12 @@ public class Member implements Persistable<String> {
     private Provider provider;
     private String zipcode;
     private String street;
-    @Column(name = "addressDetail")
     private String addressDetail;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "member_roles",
-            joinColumns = @JoinColumn(name = "member_user_id")  // ← 여기가 핵심!
+            joinColumns = @JoinColumn(name = "member_user_id" , referencedColumnName = "userId")  // ← 여기가 핵심!
     )
     @Enumerated(EnumType.STRING)
     private List<Role> roles;
@@ -53,12 +48,11 @@ public class Member implements Persistable<String> {
 
     @CreatedDate
     @Column(updatable = false, name = "createdDate")
-    @NonNull
     private LocalDateTime createdDate;
 
     @Builder
-    public Member(@NonNull String userId, String password, String username, String nickname,
-                  int gender, LocalDate birth, @NonNull String email, String phoneNo,
+    public Member(String userId, String password, String username, String nickname,
+                  int gender, LocalDate birth, String email, String phoneNo,
                   boolean social, Provider provider, String zipcode, String street, String addressDetail,
                   List<Role> roles, LocalDateTime createdDate) {
         this.userId = userId;
