@@ -86,7 +86,7 @@ public class MemberService implements UserDetailsService {
      * @param requestDTO
      * @return TokenDTO
      */
-    //@Transactional
+    @Transactional
     public TokenDTO login(@RequestBody LoginRequestDTO requestDTO) {
         authService.authenticateLogin(requestDTO);
 
