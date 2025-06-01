@@ -26,27 +26,27 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             , FilterChain filterChain) throws ServletException, IOException {
 
         String path = request.getRequestURI();
-        // 🔒 이 경로들은 JWT 검사 안 하고 통과시킴
+        // 이 경로들은 JWT 검사 안 하고 통과시킴
         if (path.startsWith("/auth") || path.startsWith("/public") || path.equals("/")) {
             filterChain.doFilter(request, response); // 다음 필터로 넘어가!
             return;
         }
 
-        String jwt = resolveToken(request);
+          String jwt = resolveToken(request);
         // jwt와 밸리데이션 토큰 조건
-        if(StringUtils.hasText(jwt) && jwtTokenProvider.validateToken(jwt)) {
+         if(StringUtils.hasText(jwt) && jwtTokenProvider.validateToken(jwt)) {
             // 서명 검증
             Authentication authentication = jwtTokenProvider.getAuthentication(jwt);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
-        filterChain.doFilter(request, response);
+         filterChain.doFilter(request, response);
     }
 
     private String resolveToken(HttpServletRequest request) {
         String token = request.getHeader("Authorization");
         String BEARER_PREFIX = "Bearer ";
         if (StringUtils.hasText(token) && token.startsWith(BEARER_PREFIX)) {
-            return token.substring(BEARER_PREFIX.length());
+            return token.substring (BEARER_PREFIX.length());
         }
         return null;
     }

@@ -7,12 +7,10 @@ spring:
       location: /tmp              # 임시 저장 위치 (없으면 기본 temp 디렉토리 사용)
   datasource:
     url: jdbc:mysql://localhost:3308/mysql?useSSL=false&serverTimezone=Asia/Seoul
-    username:
-    password:
+    username: root
+    password: 1234
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
-    hibernate:
-      ddl-auto: update
     properties:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
@@ -28,7 +26,7 @@ jwt:
   secret: u1H4BQ6R6W5rsmsI1k28JjcfpNH9EpS4kBgHQZNE92E=
 
 server:
-  port: 8088
+  port: 8888
   servlet:
     context-path: /
     encoding:

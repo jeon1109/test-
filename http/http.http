@@ -1,0 +1,8 @@
+POST http://localhost:8888/member/login
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3NDkzNzgxMzR9.InjWrXdEz7yztnMbRnxK7Mep5RGEiOwavznpTRtWaO8
+
+{
+  "userId": "john128834",
+  "password": "1234"
+}

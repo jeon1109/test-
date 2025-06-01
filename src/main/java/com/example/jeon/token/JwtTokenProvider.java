@@ -54,6 +54,7 @@ public class JwtTokenProvider {
                 .setExpiration(Date.from(now.plusMillis(ACCESS_TOKEN_VALIDITY)))
                 .signWith(encodedKey)
                 .compact();
+
         
         // 리프레쉬 토큰 만들기
         String refreshToken = Jwts.builder()
@@ -61,9 +62,9 @@ public class JwtTokenProvider {
                 .signWith(encodedKey)
                 .compact();
 
-        return TokenDTO.builder()
+         return TokenDTO.builder()
                 .tokenType(BEARER_TYPE)
-                .accessToken(accessToken)
+                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .duration(Duration.ofMillis(REFRESH_TOKEN_VALIDITY))
                 .build();
@@ -82,9 +83,12 @@ public class JwtTokenProvider {
                 .build()
                 .parseClaimsJws(accessToken).getBody();
 
-        if(claims.get("roles") == null) {
-            throw new RuntimeException("권한정보가 없는 토큰입니다.");
-        }
+        System.out.println("만료 시각: " + claims.getExpiration());
+        System.out.println("현재 시각: " + new Date());
+
+//        if(claims.get("roles") == null) {
+//            throw new RuntimeException("권한정보가 없는 토큰입니다.");
+//        }
 
         Collection<? extends GrantedAuthority> roles =
                 Arrays.stream(claims.get("roles")
@@ -100,14 +104,16 @@ public class JwtTokenProvider {
         try {
             Jwts.parserBuilder().setSigningKey(encodedKey).build().parseClaimsJws(token);
             return true;
-        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-            log.info("잘못된 JWT 서명입니다.");
         } catch (ExpiredJwtException e) {
-            log.info("만료된 JWT 토큰입니다.");
+            System.out.println("만료됨");
+        } catch (SignatureException e) {
+            System.out.println("서명 오류");
+        } catch (MalformedJwtException e) {
+            System.out.println("토큰 손상");
         } catch (UnsupportedJwtException e) {
-            log.info("지원되지 않는 JWT 토큰입니다.");
-        } catch (IllegalArgumentException e) {
-            log.info("JWT 토큰이 잘못되었습니다.");
+            System.out.println("알고리즘 오류");
+        } catch (JwtException e) {
+            System.out.println("기타 JWT 에러: " + e.getMessage());
         }
         return false;
     }

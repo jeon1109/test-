@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 @SequenceGenerator(name = "SEQ_ACCESS_IP_GENERATOR", sequenceName = "SEQ_ACCESS_IP",
         initialValue = 1, allocationSize = 1)
 public class WhiteIp {
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ACCESS_IP_GENERATOR")
     @Column(name = "rec_key", columnDefinition = "int8 DEFAULT nextval('SEQ_ACCESS_IP'::regclass)")
